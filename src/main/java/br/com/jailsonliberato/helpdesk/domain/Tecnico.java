@@ -1,19 +1,24 @@
 package br.com.jailsonliberato.helpdesk.domain;
 
+import br.com.jailsonliberato.helpdesk.domain.enums.Perfil;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
+@Entity
 public class Tecnico extends Pessoa{
 
+    @OneToMany(mappedBy = "tecnico")
     private List<Chamado> chamados;
 
-    public Tecnico(Integer id, String nome, String cpf, String email, String senha, Set<Integer> perfis, LocalDate dataCriacao) {
-        super(id, nome, cpf, email, senha, perfis, dataCriacao);
+    public Tecnico(){
+        super();
+        addPerfil(Perfil.CLIENTE);
     }
+
 }
