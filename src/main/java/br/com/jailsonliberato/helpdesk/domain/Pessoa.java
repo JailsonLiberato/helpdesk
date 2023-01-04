@@ -6,9 +6,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 @Setter
 @AllArgsConstructor
 @Entity
+@SuperBuilder
 public abstract class Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +34,9 @@ public abstract class Pessoa implements Serializable {
     @CollectionTable(name = "PERFIS")
     protected Set<Integer> perfis;
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @CreatedDate
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_criacao")
     protected LocalDate dataCriacao;
 
     public Pessoa(){
@@ -42,6 +49,9 @@ public abstract class Pessoa implements Serializable {
     }
 
     public void addPerfil(Perfil perfil){
+        if(this.perfis == null){
+            this.perfis = new HashSet<>();
+        }
         this.perfis.add(perfil.getCodigo());
     }
 
