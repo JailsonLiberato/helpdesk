@@ -2,6 +2,7 @@ package br.com.jailsonliberato.helpdesk.services;
 
 import br.com.jailsonliberato.helpdesk.domain.Tecnico;
 import br.com.jailsonliberato.helpdesk.repositories.TecnicoRepository;
+import br.com.jailsonliberato.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,6 @@ public class TecnicoService {
 
     public Tecnico findById(Integer id){
         Optional<Tecnico> tecnico = repository.findById(id);
-        return tecnico.orElse(null);
+        return tecnico.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
     }
 }
