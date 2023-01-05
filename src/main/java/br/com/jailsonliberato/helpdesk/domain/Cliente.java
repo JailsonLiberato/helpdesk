@@ -1,6 +1,7 @@
 package br.com.jailsonliberato.helpdesk.domain;
 
 import br.com.jailsonliberato.helpdesk.domain.enums.Perfil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @SuperBuilder
 public class Cliente extends Pessoa {
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Chamado> chamados;
 

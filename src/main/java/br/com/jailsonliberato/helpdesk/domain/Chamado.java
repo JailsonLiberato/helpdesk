@@ -4,11 +4,7 @@ import br.com.jailsonliberato.helpdesk.domain.enums.Prioridade;
 import br.com.jailsonliberato.helpdesk.domain.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -18,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SuperBuilder
+@Builder
 public class Chamado implements Serializable {
 
     @Id
