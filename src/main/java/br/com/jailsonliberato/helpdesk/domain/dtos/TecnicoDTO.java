@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -34,7 +33,10 @@ public class TecnicoDTO implements Serializable {
         this.email = tecnico.getEmail();
         this.senha = tecnico.getSenha();
         this.addPerfil(Perfil.CLIENTE);
-        this.perfis = tecnico.getPerfis().stream().map(perfil -> Perfil.toEnum(perfil.getCodigo())).collect(Collectors.toSet());
+        addPerfil(Perfil.CLIENTE);
+        if(tecnico.getPerfis() != null){
+            this.perfis = tecnico.getPerfis();
+        }
         this.dataCriacao = tecnico.getDataCriacao() == null ? LocalDate.now() : tecnico.getDataCriacao();
     }
 

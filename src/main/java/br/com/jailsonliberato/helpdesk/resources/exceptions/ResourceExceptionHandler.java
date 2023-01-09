@@ -1,5 +1,6 @@
 package br.com.jailsonliberato.helpdesk.resources.exceptions;
 
+import br.com.jailsonliberato.helpdesk.services.exceptions.DataIntegrityViolationException;
 import br.com.jailsonliberato.helpdesk.services.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice
 public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex,
+                                                                         HttpServletRequest request) {
+        StandardError error = StandardError.builder().timestamp(System.currentTimeMillis()).status(HttpStatus.BAD_REQUEST.value()).error("Violação de dados").message(ex.getMessage()).path(request.getRequestURI()).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 
     @ResponseBody
     @ExceptionHandler(ObjectNotFoundException.class)

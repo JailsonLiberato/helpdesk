@@ -6,7 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,16 +19,12 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @Entity
+@NoArgsConstructor
 public class Tecnico extends Pessoa{
 
     @JsonIgnore
     @OneToMany(mappedBy = "tecnico")
     private List<Chamado> chamados;
-
-    public Tecnico(){
-        super();
-        addPerfil(Perfil.CLIENTE);
-    }
 
     public Tecnico(TecnicoDTO tecnico){
         this.id = tecnico.getId();
@@ -33,8 +32,11 @@ public class Tecnico extends Pessoa{
         this.cpf = tecnico.getCpf();
         this.email = tecnico.getEmail();
         this.senha = tecnico.getSenha();
-        this.perfis = tecnico.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
-        this.dataCriacao = tecnico.getDataCriacao();
+        addPerfil(Perfil.CLIENTE);
+        if(tecnico.getPerfis() != null){
+            this.perfis = tecnico.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
+        }
+        this.dataCriacao = tecnico.getDataCriacao() == null ? LocalDate.now() : tecnico.getDataCriacao();
     }
 
 }
