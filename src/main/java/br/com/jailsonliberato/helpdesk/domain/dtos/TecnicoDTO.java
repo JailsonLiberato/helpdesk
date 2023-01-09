@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,6 @@ import java.util.stream.Collectors;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class TecnicoDTO implements Serializable {
 
     protected Integer id;
@@ -26,13 +26,22 @@ public class TecnicoDTO implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCriacao;
 
+
     public TecnicoDTO(Tecnico tecnico){
         this.id = tecnico.getId();
         this.nome = tecnico.getNome();
         this.cpf = tecnico.getCpf();
         this.email = tecnico.getEmail();
         this.senha = tecnico.getSenha();
+        this.addPerfil(Perfil.CLIENTE);
         this.perfis = tecnico.getPerfis().stream().map(perfil -> Perfil.toEnum(perfil.getCodigo())).collect(Collectors.toSet());
-        this.dataCriacao = tecnico.getDataCriacao();
+        this.dataCriacao = tecnico.getDataCriacao() == null ? LocalDate.now() : tecnico.getDataCriacao();
+    }
+
+    public void addPerfil(Perfil perfil){
+        if(this.perfis == null){
+            this.perfis = new HashSet<>();
+        }
+        this.perfis.add(perfil);
     }
 }
