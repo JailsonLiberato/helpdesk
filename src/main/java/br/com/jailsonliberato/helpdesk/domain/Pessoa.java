@@ -2,12 +2,14 @@ package br.com.jailsonliberato.helpdesk.domain;
 
 import br.com.jailsonliberato.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -25,6 +27,7 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
+    @CPF
     @Column(unique = true)
     protected String cpf;
     @Column(unique = true)
@@ -34,7 +37,7 @@ public abstract class Pessoa implements Serializable {
     @CollectionTable(name = "PERFIS")
     protected Set<Integer> perfis;
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @CreatedDate
+    @JsonSerialize(using = LocalDateSerializer.class)
     @Temporal(TemporalType.DATE)
     @Column(name = "data_criacao")
     protected LocalDate dataCriacao;
