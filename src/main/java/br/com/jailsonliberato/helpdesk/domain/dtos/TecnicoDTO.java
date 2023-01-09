@@ -3,6 +3,7 @@ package br.com.jailsonliberato.helpdesk.domain.dtos;
 import br.com.jailsonliberato.helpdesk.domain.Tecnico;
 import br.com.jailsonliberato.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
@@ -17,9 +18,14 @@ import java.util.Set;
 public class TecnicoDTO implements Serializable {
 
     protected Integer id;
+    @NotNull(message = "O campo NOME é requerido")
     protected String nome;
+
+    @NotNull(message = "O campo CPF é requerido")
     protected String cpf;
+    @NotNull(message = "O campo E-MAIL é requerido")
     protected String email;
+    @NotNull(message = "O campo SENHA é requerido")
     protected String senha;
     protected Set<Perfil> perfis;
     @JsonFormat(pattern = "dd/MM/yyyy")
