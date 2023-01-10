@@ -18,10 +18,10 @@ import java.time.LocalDate;
 public class ChamadoDTO implements Serializable {
 
     private Integer id;
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataAbertura;
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataFechamento;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private String dataAbertura;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private String dataFechamento;
     @NotNull(message = "O campo PRIORIDADE é requerido")
     private Integer prioridade;
     @NotNull(message = "O campo STATUS é requerido")
@@ -39,8 +39,8 @@ public class ChamadoDTO implements Serializable {
 
     public ChamadoDTO(Chamado chamado) {
         this.id = chamado.getId();
-        this.dataAbertura = chamado.getDataAbertura() == null ? LocalDate.now() : chamado.getDataAbertura();
-        this.dataFechamento = chamado.getDataFechamento();
+        this.dataAbertura = chamado.getDataAbertura() == null ? LocalDate.now().toString() : chamado.getDataAbertura().toString();
+        this.dataFechamento = chamado.getDataFechamento() == null ? null : chamado.getDataFechamento().toString();
         this.prioridade = chamado.getPrioridade().getCodigo();
         this.status = chamado.getStatus().getCodigo();
         this.titulo = chamado.getTitulo();

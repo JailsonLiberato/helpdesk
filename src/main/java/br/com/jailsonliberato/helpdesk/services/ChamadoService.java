@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +66,11 @@ public class ChamadoService {
         chamado.setStatus(Status.toEnum(chamadoDTO.getStatus()));
         chamado.setTitulo(chamadoDTO.getTitulo());
         chamado.setObservacoes(chamadoDTO.getObservacoes());
+        final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        chamado.setDataAbertura(LocalDate.parse(chamadoDTO.getDataAbertura(), dtf));
+        if(chamado.getDataFechamento() != null){
+            chamado.setDataFechamento(LocalDate.parse(chamadoDTO.getDataFechamento(), dtf));
+        }
         return chamado;
     }
 
