@@ -39,8 +39,9 @@ public class ClienteService {
 
     public Cliente update(Integer id, ClienteDTO clienteDTO) {
         clienteDTO.setId(id);
+        Cliente cliente = findById(id);
         validaPorCpfEEmail(clienteDTO);
-        Cliente cliente = new Cliente(clienteDTO);
+        cliente = new Cliente(clienteDTO);
         return repository.save(cliente);
     }
 

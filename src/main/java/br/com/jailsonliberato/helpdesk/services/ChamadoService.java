@@ -39,6 +39,13 @@ public class ChamadoService {
         return repository.save(newChamado(chamadoDTO));
     }
 
+    public Chamado update(Integer id, ChamadoDTO chamadoDTO) {
+        chamadoDTO.setId(id);
+        Chamado chamado = findById(id);
+        chamado = newChamado(chamadoDTO);
+        return repository.save(chamado);
+    }
+
     private Chamado newChamado(ChamadoDTO chamadoDTO) {
         Tecnico tecnico = tecnicoService.findById(chamadoDTO.getTecnico());
         Cliente cliente = clienteService.findById(chamadoDTO.getCliente());
@@ -60,4 +67,6 @@ public class ChamadoService {
         chamado.setObservacoes(chamadoDTO.getObservacoes());
         return chamado;
     }
+
+
 }

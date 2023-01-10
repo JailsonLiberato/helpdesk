@@ -39,8 +39,9 @@ public class TecnicoService {
 
     public Tecnico update(Integer id, TecnicoDTO tecnicoDTO) {
         tecnicoDTO.setId(id);
+        Tecnico tecnico = findById(id);
         validaPorCpfEEmail(tecnicoDTO);
-        Tecnico tecnico = new Tecnico(tecnicoDTO);
+        tecnico = new Tecnico(tecnicoDTO);
         return repository.save(tecnico);
     }
 
